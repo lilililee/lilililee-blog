@@ -10,6 +10,8 @@
       </el-col>
     </el-row> 
   </div>
+
+   
 </section>
 
 </template>
@@ -23,6 +25,7 @@
 
       }
     },
+
     components: { 'v-aside': vAside }
   }
 </script>

@@ -1,6 +1,9 @@
 <template>
   <header class="header">
+    <el-progress :text-inside="true" :stroke-width="2" :percentage="progress"></el-progress>
+      
     <div class="container">
+
       <el-row type="flex" justify="space-between">
 
         <el-col :sm="4" class="logo">
@@ -16,6 +19,8 @@
 
   </header>
 
+
+
 </template>
 
 <script>
@@ -26,11 +31,13 @@
         
       }
     },
+    props: ['progress'],
     computed: {
       isShowMenu(){
         return this.$store.state.isShowMenu;
       }
     },
+    
 
     methods: {
       toggleMenu() {

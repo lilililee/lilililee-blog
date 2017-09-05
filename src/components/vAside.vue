@@ -1,5 +1,5 @@
 <template>
-  <aside class="aside-nav" :class="{active:isShowMenu}" @click.self="toggleMenu">
+  <aside class="aside-nav" :class="{active:isShowMenu}" @click.self="toggleMenu" >
 
     <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :router="true">
 
@@ -16,7 +16,6 @@
 
     </el-menu>
 
-
   </aside>
 
 </template>
@@ -28,7 +27,7 @@
     name: 'vAside',
     data () {
       return {
-        articleList: list
+        articleList: list,
       }
     },
     computed: {

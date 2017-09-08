@@ -12,42 +12,39 @@ let list = {
 
 	learing: {
 		'html': [
-			{
-				id: '31001',
-				title: 'html5标签详解',
-				time: '2017-9-2'
-			}
+			
 		],
 		'css': [
 			{
-				id: '32001',
+				id: 'css-1',
 				title: '居中方案',
 				time: '2017-9-2'
 			}
 		],
 		'javascript': [
 			{
-				id: '33001',
+				id: 'js-1',
 				title: '原型链讲解',
 				time: '2017-9-2'
 			},
 			{
-				id: '33002',
+				id: 'js-2',
 				title: '字符串方法介绍',
 				time: '2017-9-2'
 			},
 			{
-				id: '33003',
+				id: 'js-3',
 				title: '数组方法介绍',
 				time: '2017-9-2'
 			},
 			{
-				id: '33004',
+				id: 'js-4',
 				title: 'DOM节点',
 				time: '2017-9-2'
 			}
 
 		],
+		'vue': []
 	}
 }
 

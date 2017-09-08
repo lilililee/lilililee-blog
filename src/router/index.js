@@ -10,6 +10,11 @@ export default new Router({
       path: '/article',
       name: 'vArticle',
       component: vArticle
+    },
+
+    {
+    	path: '/', 
+    	redirect: '/article?id=10001'
     }
   ]
 })

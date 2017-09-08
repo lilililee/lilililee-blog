@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuex from 'vuex'
+import 'babel-polyfill'				// 解决ie报错：polyfill-eventsource added missing EventSource to window
 
 // element-ui
 import '../theme/index.css'
@@ -25,11 +26,15 @@ Vue.component('v-footer',vFooter);
 Vue.use(Vuex)
 const store = new Vuex.Store({
 	state: {
-		isShowMenu: false
+		isShowMenu: false,
+		progress: 0
 	},
 	mutations: {
 		updateIsShowMenu(state, isShowMenu) {
 			state.isShowMenu = isShowMenu;
+		},
+		updateProgress(state, progress) {
+			state.progress = progress;
 		}
 	}
 })

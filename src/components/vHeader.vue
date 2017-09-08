@@ -1,6 +1,12 @@
 <template>
   <header class="header">
-    <el-progress :text-inside="true" :stroke-width="2" :percentage="progress"></el-progress>
+    <el-progress 
+    v-show="progress!=100"
+    :text-inside="true" 
+    :stroke-width="2" 
+    :percentage="progress">
+      
+    </el-progress>
       
     <div class="container">
 
@@ -31,10 +37,12 @@
         
       }
     },
-    props: ['progress'],
     computed: {
       isShowMenu(){
         return this.$store.state.isShowMenu;
+      },
+      progress() {
+        return this.$store.state.progress;
       }
     },
     

@@ -83,7 +83,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
 
 
 body{
-	color: #333;	
+	color: #5e6d82;	
 	font: 16px/1 "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-font-smoothing: grayscale;
@@ -116,6 +116,14 @@ i {
 
 }
 
+img {
+	max-width: 100%;
+}
+
+strong {
+	font-weight: bold;
+}
+
 
 
 .container {
@@ -138,4 +146,16 @@ i {
 
 .rt {
 	float: right;
+}
+
+.text-left {
+	text-align: left!important;
+}
+
+.text-right {
+	text-align: right!important;
+}
+
+.text-center {
+	text-align: center!important;
 }

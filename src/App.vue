@@ -7,6 +7,8 @@
     <v-footer></v-footer>
 
   </div>
+
+  </div>
 </template>
 
 <script>

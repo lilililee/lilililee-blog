@@ -5,7 +5,7 @@
       <ul>
         <li><a href="https://github.com/lilililee">Github</a></li>
         <li><a href="https://github.com/lilililee/lilililee-blog">博客源码</a></li>
-        <li><a href="javascript">邮箱: liguang.hallo@gmail.com</a></li>
+        <li><a href="javascript:">邮箱: liguang.hallo@gmail.com</a></li>
       </ul>
     </div>
 

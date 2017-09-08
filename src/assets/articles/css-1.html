@@ -1,0 +1,261 @@
+
+<div class="caption">
+	<h1>纯css水平垂直居中方案</h1>
+	<small>发表于2017-09-07 by lilililee</small>
+</div>
+
+<div class="content">
+	<section>
+		<h2>概述</h2>
+		<p>在页面布局中经常会要实现居中的效果，水平居中很容易，但要实现垂直居中可能就要下点功夫了，应该确切的说是实现内容高度不固定的元素垂直居中，毕竟高宽固定的话大不了我拿尺去量，在用position：absolute去定位，你奈我何！</p>
+	</section>
+	<section>
+		<h2>预热</h2>
+		<p>先简单介绍常用的一些居中方法吧！</p>
+		<h3>水平居中</h3>
+		<p>1. 对于行内元素在父容器使用text-align: center;即可</p>
+		<p>2. 对于块元素自身使用margin: auto;即可</p>
+		<h3>垂直居中</h3>
+		<p>1. 对于单行文字，使得height和line-height相等</p>
+		<p>2. 对于多行，可使用table-cell + vertical-align来实现，在普通流布局里还是比较实用的，当前绝对定位中会出现失效的现象，下面例子会出现。</p>
+
+
+	</section>
+
+	<section>
+		<h2>实例</h2>
+		<p>废话不多说，来尝试做一个弹出框，高宽不固定，要求始终处于屏幕中间，目前我了解的有3种不同思想的实现方式，下面将从浏览器兼容性依次讲解</p>
+		<h3>先搭建一个基本结构   <a href="javascript:" id="demo1-btn">查看效果</a></h3>
+
+		<pre>
+			<code class="language-html">
+&lt;!-- html --&gt;
+&lt;div class=&quot;modal-overlay&quot;&gt;
+	&lt;div class=&quot;modal&quot;&gt;
+		&lt;p&gt;我是一个高宽不固定且水平垂直居中的弹出框！&lt;/p&gt;
+		&lt;p&gt;我是一个高宽不固定且水平垂直居中的弹出框！&lt;/p&gt;
+		&lt;p&gt;我是一个高宽不固定且水平垂直居中的弹出框！&lt;/p&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;!-- css --&gt;
+&lt;style&gt;
+	html,body {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	.modal-overlay {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background: rgba(0, 0 ,0 ,0.5);
+	}
+
+	.modal {
+		display: inline-block;
+		border: 1px solid #eee;
+		background: #fff;
+		border-radius: 5px;
+	}
+&lt;/style&gt;
+</code>
+</pre>
+</section>
+
+<section>
+	<h2>方案一</h2>
+	<h3>原理分析</h3>
+	<p>添加一个dispaly: inline-block的辅助元素，高度父容器高度，宽度为0，通过vertical-algin:middle来实现</p>
+
+	<pre>
+		<code class="language-css">
+/*在基本结构中新增如下代码*/
+.modal-overlay {
+	text-align: center;
+}
+
+.modal-overlay:after {
+	content: &#x27;&#x27;;
+	display: inline-block;
+	width: 0;
+	height: 100%;
+	vertical-align: middle;
+}
+
+.modal {
+	vertical-align: middle;
+}
+</code></pre>
+
+<h3>方案总结  <a href="javascript:" id="demo2-btn">查看效果</a></h3>	
+<p>1. 该方案与dispaly:table-cell的方式有点相似，但是table-cell会被float：left, position: fixed / absolute等属性破坏，无法实现垂直居中的效果，比如我用的例子就用到了position:fixed, table-cell在这种应用场景下就无能为力。</p>
+<p>2. 该方案<strong>兼容IE8+</strong>，是我在做图片和文字垂直对齐得到的想法，可以说是完全没兼容性问题，<strong>强烈推荐！！！</strong></p>
+
+</section>
+
+
+<section>
+	<h2>方案二</h2>
+	<h3>原理分析</h3>
+	<p>我们知道在弹出高宽固定的情况下，可以像最开始说的那样用absolute去定位做，当然用尺量倒不必，垂直居中只需父容器将top设为父容器高度一半，子容器margin-top设置自身高度一半的负值即可,水平居中同理，但是高度不固定时就只能用js去动态的获取宽高，再设置margin，十分麻烦。</p>
+	<p>通过以上分析，我们知道只要搞定父容器高宽一半和子容器高宽一半，父容器好说，直接top: 50%; left: 50%; 就得到了，子容器怎么办呢？接下来上场的就是css3
+	的新属性transform: translate</p>
+	<p>使用absolute和translate百分比特性，先让子容器原理父容器一半宽高的距离，再想父容器靠近自身一半的距离</p>
+
+	<pre>
+		<code class="language-css">
+/*在基本结构中新增如下代码*/
+.modal {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+</code></pre>
+
+<h3>方案总结  <a href="javascript:" id="demo3-btn">查看效果</a></h3>	
+<p>1. 该方案与dispaly:table-cell的方式有点相似，但是table-cell会被float：left, position: fixed / absolute等属性破坏，无法实现垂直居中的效果，比如我用的例子就用到了position:fixed, table-cell在这种应用场景下就无能为力。</p>
+<p>2. 该方案<strong>兼容IE8+</strong>，是我在做图片和文字垂直对齐得到的想法，可以说是完全没兼容性问题，<strong>强烈推荐！！！</strong></p>
+
+</section>
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+<div class="footer-link">
+	<a href="./#/article?id=10001" class="left-link">
+		<i class="el-icon-arrow-left"></i>
+		上一篇：10001
+	</a>
+	<a href="./#/article?id=33001" class="left-link">
+		下一篇：30001
+		<i class="el-icon-arrow-right"></i>
+	</a>
+</div>
+
+
+<div class="demo">
+	<div class="modal-overlay" id="demo1">
+		<div class="modal">
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+		</div>
+	</div>
+
+	<div class="modal-overlay" id="demo2">
+		<div class="modal">
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+		</div>
+	</div>
+
+	<div class="modal-overlay" id="demo3">
+		<div class="modal">
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+		</div>
+	</div>
+
+	<!-- css -->
+	<style>
+		html,body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+
+		.modal-overlay {
+			position: fixed;
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+			background: rgba(0, 0 ,0 ,0.5);
+
+			opacity: 0;
+			visibility: hidden;
+			transition: all 0.5s;
+		}
+
+		.modal-overlay.modal-show {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.modal {
+			display: inline-block;
+			padding: 10px;
+			border: 1px solid #eee;
+			background: #fff;
+			border-radius: 5px;
+		}
+
+		/*demo2在基本结构中新增如下代码*/
+		.modal-overlay#demo2 {
+			text-align: center;
+		}
+
+		.modal-overlay#demo2:after {
+			content: '';
+			display: inline-block;
+			width: 0;
+			height: 100%;
+			vertical-align: middle;
+		}
+
+		#demo2 .modal {
+			vertical-align: middle;
+		}
+
+		#demo3 .modal {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+		}
+	</style>
+	
+	<script>
+		handleDemo('demo1-btn','demo1')
+
+		handleDemo('demo2-btn','demo2')
+
+		handleDemo('demo3-btn','demo3')
+
+		function handleDemo (btnId, targetId) {
+			var demoBtn = document.getElementById(btnId);
+			var demo = document.getElementById(targetId);
+			demoBtn.onclick = function() {
+
+				if(demo && demo.className.indexOf('modal-show')) {
+					demo.className += ' modal-show'
+				}
+			}
+
+			demo.onclick = function() {
+				this.className = this.className.replace('modal-show', '');
+			}
+
+		}
+	</script>
+
+
+</div>

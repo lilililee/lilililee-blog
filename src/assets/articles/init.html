@@ -1,0 +1,41 @@
+<div class="caption">
+	<h1>闭包详解ss</h1>
+	<small>发表于2017-09-04 by lilililee</small>
+</div>
+
+<div class="content">
+	<section>
+		<h2>定义</h2>
+		<p>闭包是指有权访问访问另一个函数作用域中变量的函数</p>
+	</section>
+
+	<section>
+		<h2>闭包实例</h2>
+		<pre>
+		<code class="language-js">
+var obj = {
+	fn:function(name){
+		console.log(this);		//obj对象
+		fn2();
+		function fn2 (){
+			console.log(this);	//window对象
+			console.log(obj.fn.arguments);	//可访问上层函数的arguments
+		}
+	}
+}
+obj.fn('lee');
+		</code>
+		</pre>
+	</section>
+</div>
+
+<div class="footer-link">
+	<a href="./#/article?id=10001" class="left-link">
+		<i class="el-icon-arrow-left"></i>
+		上一篇：10001
+	</a>
+	<a href="./#/article?id=33001" class="left-link">
+		下一篇：30001
+		<i class="el-icon-arrow-right"></i>
+	</a>
+</div>

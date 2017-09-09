@@ -1,6 +1,6 @@
 <template>
   <aside class="aside-nav" :class="{active:isShowMenu}" @click.self="toggleMenu" >
-
+    <div> </div>
     <el-menu default-active="1" class="el-menu-vertical-demo" @open="handleOpen" @close="handleClose" :router="true">
 
       <el-menu-item :index="handlePath(articleList.introduce.id)"><i class="el-icon-menu"></i>个人简介</el-menu-item>

@@ -18,9 +18,11 @@ import './assets/styles/blog.scss'
 import vHeader from '@/components/vHeader'
 import vMain from '@/components/vMain'
 import vFooter from '@/components/vFooter'
+import vToTop from '@/components/vToTop'
 Vue.component('v-header',vHeader);
 Vue.component('v-main',vMain);
 Vue.component('v-footer',vFooter);
+Vue.component('v-to-top',vToTop);
 
 // 配置vuex
 Vue.use(Vuex)

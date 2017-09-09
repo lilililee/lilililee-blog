@@ -86,7 +86,7 @@
               this.$store.commit('updateIsShowMenu', false);
               clearInterval(this.intervalId)
               this.$store.commit('updateProgress', 100);
-            },500)
+            },300)
             
             
             

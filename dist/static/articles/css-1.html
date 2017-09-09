@@ -7,16 +7,16 @@
 <div class="content">
 	<section>
 		<h2>概述</h2>
-		<p>在页面布局中经常会要实现居中的效果，水平居中很容易，但要实现垂直居中可能就要下点功夫了，应该确切的说是实现内容高度不固定的元素垂直居中，毕竟高宽固定的话大不了我拿尺去量，在用position：absolute去定位，你奈我何！</p>
+		<p>在页面布局中经常会要实现居中的效果，水平居中很容易，但要实现垂直居中可能就要下点功夫了，应该确切的说是实现内容高度不固定的元素垂直居中，毕竟高宽固定的话大不了我拿尺去量，再用position：absolute去定位，你奈我何！</p>
 	</section>
 	<section>
 		<h2>预热</h2>
 		<p>先简单介绍常用的一些居中方法吧！</p>
 		<h3>水平居中</h3>
-		<p>1. 对于行内元素在父容器使用text-align: center;即可</p>
-		<p>2. 对于块元素自身使用margin: auto;即可</p>
+		<p>1. 对于行内元素在父容器使用text-align: center;即可。</p>
+		<p>2. 对于块元素自身使用margin: auto;即可。</p>
 		<h3>垂直居中</h3>
-		<p>1. 对于单行文字，使得height和line-height相等</p>
+		<p>1. 对于单行文字，使得height和line-height相等。</p>
 		<p>2. 对于多行，可使用table-cell + vertical-align来实现，在普通流布局里还是比较实用的，当前绝对定位中会出现失效的现象，下面例子会出现。</p>
 
 
@@ -24,8 +24,8 @@
 
 	<section>
 		<h2>实例</h2>
-		<p>废话不多说，来尝试做一个弹出框，高宽不固定，要求始终处于屏幕中间，目前我了解的有3种不同思想的实现方式，下面将从浏览器兼容性依次讲解</p>
-		<h3>先搭建一个基本结构   <a href="javascript:" id="demo1-btn">查看效果</a></h3>
+		<p>废话不多说，我们来尝试做一个弹出框，高宽不固定，要求始终处于屏幕中间，目前我了解的有3种不同思想的实现方式，下面将从浏览器兼容性依次讲解。</p>
+		<h3>先搭建一个基本结构   <a href="javascript:" id="demo0-btn">查看效果</a></h3>
 
 		<pre>
 			<code class="language-html">
@@ -68,9 +68,9 @@
 </section>
 
 <section>
-	<h2>方案一</h2>
+	<h2>方案一（兼容ie8+）</h2>
 	<h3>原理分析</h3>
-	<p>添加一个dispaly: inline-block的辅助元素，高度父容器高度，宽度为0，通过vertical-algin:middle来实现</p>
+	<p>添加一个dispaly: inline-block的辅助元素，高度为父容器高度，宽度为0，通过同级元素vertical-algin:middle来实现</p>
 
 	<pre>
 		<code class="language-css">
@@ -92,7 +92,7 @@
 }
 </code></pre>
 
-<h3>方案总结  <a href="javascript:" id="demo2-btn">查看效果</a></h3>	
+<h3>方案总结  <a href="javascript:" id="demo1-btn">查看效果</a></h3>	
 <p>1. 该方案与dispaly:table-cell的方式有点相似，但是table-cell会被float：left, position: fixed / absolute等属性破坏，无法实现垂直居中的效果，比如我用的例子就用到了position:fixed, table-cell在这种应用场景下就无能为力。</p>
 <p>2. 该方案<strong>兼容IE8+</strong>，是我在做图片和文字垂直对齐得到的想法，可以说是完全没兼容性问题，<strong>强烈推荐！！！</strong></p>
 
@@ -100,13 +100,11 @@
 
 
 <section>
-	<h2>方案二</h2>
+	<h2>方案二（兼容ie9+）</h2>
 	<h3>原理分析</h3>
-	<p>我们知道在弹出高宽固定的情况下，可以像最开始说的那样用absolute去定位做，当然用尺量倒不必，垂直居中只需父容器将top设为父容器高度一半，子容器margin-top设置自身高度一半的负值即可,水平居中同理，但是高度不固定时就只能用js去动态的获取宽高，再设置margin，十分麻烦。</p>
+	<p>我们知道在子容器高宽固定的情况下，可以像最开始说的那样用absolute去定位做，当然用尺量倒不必，垂直居中只需父容器将top设为父容器高度一半，子容器margin-top设置自身高度一半的负值即可,水平居中同理，但是高度不固定时就只能用js去动态的获取宽高，再设置margin，十分麻烦。</p>
 	<p>通过以上分析，我们知道只要搞定父容器高宽一半和子容器高宽一半，父容器好说，直接top: 50%; left: 50%; 就得到了，子容器怎么办呢？接下来上场的就是css3
-	的新属性transform: translate</p>
-	<p>使用absolute和translate百分比特性，先让子容器原理父容器一半宽高的距离，再想父容器靠近自身一半的距离</p>
-
+	的新属性transform: translate。</p>
 	<pre>
 		<code class="language-css">
 /*在基本结构中新增如下代码*/
@@ -118,9 +116,40 @@
 }
 </code></pre>
 
+<h3>方案总结  <a href="javascript:" id="demo2-btn">查看效果</a></h3>	
+<p>运用一定的数学计算，再结合absolute和translate百分比特性，先让子容器远离父容器一半宽高的距离，再向父容器靠近自身一半的距离，从而达到居中效果。</p>
+
+
+</section>
+
+
+<section>
+	<h2>方案三（兼容ie10+）</h2>
+	<h3>原理分析</h3>
+	<p>使用flex布局，没有原理性分析，因为人家直接是规定好么，说你是居中就是居中！</p>
+	
+	<pre>
+		<code class="language-css">
+/*在基本结构中新增如下代码*/
+.modal-overlay {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+}
+</code></pre>
+
 <h3>方案总结  <a href="javascript:" id="demo3-btn">查看效果</a></h3>	
-<p>1. 该方案与dispaly:table-cell的方式有点相似，但是table-cell会被float：left, position: fixed / absolute等属性破坏，无法实现垂直居中的效果，比如我用的例子就用到了position:fixed, table-cell在这种应用场景下就无能为力。</p>
-<p>2. 该方案<strong>兼容IE8+</strong>，是我在做图片和文字垂直对齐得到的想法，可以说是完全没兼容性问题，<strong>强烈推荐！！！</strong></p>
+<p>flex布局不仅仅是用来实现居中效果，它是w3c提出的新的布局方案，可以简便、完整、响应式地实现各种页面布局，虽然在pc端10+才支持，但是在移动端已大放异彩，因为移动端基本上是webkit内核新式浏览器，而且在Bootstrap4已使用flex替代的传统的float布局，所以掌握该布局是十分必要的！</p>
+<p>想了解更多flex布局知识，请移步<a href="http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html" target="_blank">阮一峰flex布局教程</a>。</p>
+
 
 </section>
 
@@ -149,6 +178,14 @@
 
 
 <div class="demo">
+	<div class="modal-overlay" id="demo0">
+		<div class="modal">
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
+		</div>
+	</div>
+
 	<div class="modal-overlay" id="demo1">
 		<div class="modal">
 			<div>我是一个高宽不固定且水平垂直居中的弹出框！</div>
@@ -208,12 +245,12 @@
 			border-radius: 5px;
 		}
 
-		/*demo2在基本结构中新增如下代码*/
-		.modal-overlay#demo2 {
+		/*demo1在基本结构中新增如下代码*/
+		.modal-overlay#demo1 {
 			text-align: center;
 		}
 
-		.modal-overlay#demo2:after {
+		.modal-overlay#demo1:after {
 			content: '';
 			display: inline-block;
 			width: 0;
@@ -221,19 +258,37 @@
 			vertical-align: middle;
 		}
 
-		#demo2 .modal {
+		#demo1 .modal {
 			vertical-align: middle;
 		}
-
-		#demo3 .modal {
+		
+		/*demo2在基本结构中新增如下代码*/
+		#demo2 .modal {
 			position: absolute;
 			left: 50%;
 			top: 50%;
 			transform: translate(-50%, -50%);
 		}
+
+		/*demo3在基本结构中新增如下代码*/
+		.modal-overlay#demo3 {
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			justify-content: center;
+
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+		}
 	</style>
 	
 	<script>
+		handleDemo('demo0-btn','demo0')
+
 		handleDemo('demo1-btn','demo1')
 
 		handleDemo('demo2-btn','demo2')

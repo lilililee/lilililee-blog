@@ -17,24 +17,44 @@ let list = {
 		'css': [
 			{
 				id: 'css-1',
-				title: '居中方案',
-				time: '2017-9-2'
+				title: '纯css水平垂直居中方案',
+				time: '2017-04-02'
 			}
 		],
 		'javascript': [
 			{
 				id: 'js-1',
-				title: '原型链讲解',
-				time: '2017-9-2'
+				title: '对象详解（常规属性和方法）',
+				time: '2017-02-28'
 			},
 			{
 				id: 'js-2',
-				title: '字符串方法介绍',
-				time: '2017-9-2'
+				title: '对象详解（setter和getter）',
+				time: '2017-03-05'
 			},
 			{
 				id: 'js-3',
 				title: '数组方法介绍',
+				time: '2017-9-2'
+			},
+			{
+				id: 'js-4',
+				title: 'DOM节点',
+				time: '2017-9-2'
+			},
+			{
+				id: 'js-4',
+				title: 'DOM节点',
+				time: '2017-9-2'
+			},
+			{
+				id: 'js-4',
+				title: 'DOM节点',
+				time: '2017-9-2'
+			},
+			{
+				id: 'js-4',
+				title: 'DOM节点',
 				time: '2017-9-2'
 			},
 			{

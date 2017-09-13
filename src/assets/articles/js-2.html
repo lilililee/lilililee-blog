@@ -1,15 +1,134 @@
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
-10001<br>10001<br>10001<br>10001<br>10001<br>10001<br>
+
+
+<div class="content">
+	<section>
+		<h2>概述</h2>
+		<p>在上文中基于所有对象的原型Object.prototype讲解了对象公有的常规属性和方法，下面将继续讲解对象的新特性getter和setter，简单点说定义在对对象的某个属性进行取值和赋值执行的函数。</p>
+		<p>依旧打开上次在chrome打印Object.prototype的图片，我们可以看到有4个名字比较长的方法，分别是__defineGetter__()，__defineSetter__()，__lookupGetter__()，__lookupSetter__()，<strong>其实4个方法是非标准的，已经在web标准中删除，但是是有两种标准替代方案的，对象get语法和Object.defineProperty方法</strong>，下面将这三种方法放在一起来学习。</p>
+	</section>
+
+	<section>
+		<h2>1. __defineGetter__()</h2>
+		<p>__defineGetter__ 方法可以将一个函数绑定在当前对象的指定属性上，当那个属性的值被读取时，你所绑定的函数就会被调用</p>
+		<p class="text-right">---引用自<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineGetter__" target="_blank">developer.mozilla.org</a></p>
+		<pre><code class="language-js">
+// 非标准， 不推荐
+var o = {};
+o.__defineGetter__('gimmeFive', function() { 
+	return 5; 
+});
+console.log(o.gimmeFive); // 5
+
+
+// 标准， 推荐
+// 1. 使用get语法
+var o = { 
+	get gimmeFive() { 	
+		console.log('before get this property')
+		return 5; 
+	} 
+};
+console.log(o.gimmeFive); // 先输出'before get this property'，再输出5
+
+// 2. 使用Object.defineProperty方法
+var o = {};
+Object.defineProperty(o, 'gimmeFive', {
+  get: function() {
+  	console.log('before get this property')
+    return 5;
+  }
+});
+console.log(o.gimmeFive); // 先输出'before get this property'，再输出5
+			</code></pre>
+	</section>
+
+
+	<h2>2. __defineSetter__()</h2>
+		<p>__defineSetter__ 方法可以将一个函数绑定在当前对象的指定属性上，当那个属性被赋值时，你所绑定的函数就会被调用。</p>
+		<p>__defineSetter__ 方法可以为一个已经存在的对象设置（新建或修改）访问器属性，而 set 语法 只能在新建一个对象时使用。</p>
+		<p class="text-right">---引用自<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__defineSetter__" target="_blank">developer.mozilla.org</a></p>
+		<pre><code class="language-js">
+// 非标准， 不推荐
+var o = {};
+o.__defineSetter__('gimmeFive', function(newValue) { 
+	console.log(newValue)
+});
+o.gimmeFive = 5;			// 输出5
+
+
+// 标准， 推荐
+// 1. 使用set语法
+// 该语法必须写一个形参来接收新值，否则报错
+// 即newValue是必须要有的，其他两种方法不要求
+var o = { 
+	set gimmeFive(newValue) { 	
+		console.log(newValue)
+	} 
+};
+o.gimmeFive = 55;			// 输出55
+
+// 2. 使用Object.defineProperty方法
+var o = {};
+Object.defineProperty(o, 'gimmeFive', {
+  set: function(newValue) {
+  	console.log(newValue)
+  }
+});
+o.gimmeFive = 555;		   // 输出555
+			</code></pre>
+
+
+
+	<h2>3. __lookupGetter__()</h2>
+		<p>__lookupGetter__ 方法会返回对象上指定属性的属性读取访问器函数（getter）。</p>
+		<p class="text-right">---引用自<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__lookupGetter__" target="_blank">developer.mozilla.org</a></p>
+		<pre><code class="language-js">
+// 非标准， 不推荐
+var obj = {
+    get foo() {
+        return Math.random() > 0.5 ? "foo" : "bar";
+    }
+};
+
+console.log( obj.__lookupGetter__("foo")) // function foo(){return Math.random() > 0.5 ? "foo" : "bar"}
+
+
+// 标准， 推荐
+// 使用Object.getOwnPropertyDescriptor方法
+var obj = {
+    get foo() {
+        return Math.random() > 0.5 ? "foo" : "bar";
+    }
+};
+
+console.log( Object.getOwnPropertyDescriptor(obj, "foo").get) // function foo(){return Math.random() > 0.5 ? "foo" : "bar"}
+			</code></pre>
+
+	<h2>4. __lookupSetter__()</h2>
+		<p>__lookupSetter__ 方法会返回对象上指定属性的属性设置钩子函数（setter）。</p>
+		<p class="text-right">---引用自<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/__lookupSetter__" target="_blank">developer.mozilla.org</a></p>
+		<pre><code class="language-js">
+var obj = {
+  set foo(newValue) {
+    this.bar = newValue;
+  }
+};
+
+// 非标准， 不推荐
+console.log( obj.__lookupSetter__('foo') );  // (function foo(newValue) { this.bar = newValue; })
+
+// 标准， 推荐
+console.log( Object.getOwnPropertyDescriptor(obj, 'foo').set );  // (function foo(newValue) { this.bar = newValue; })
+			</code></pre>
+
+	</section>
+</div>
+
+
+
+
+<div class="demo">
+
+</div>
+
+

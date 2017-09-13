@@ -1,2 +1,96 @@
-33001<br>33001<br>33001<br>33001<br>33001<br>33001<br>
-33001<br>33001<br>33001<br>33001<br>33001<br>33001<br>
+
+<div class="content">
+	<section>
+		<h2>概述</h2>
+		<p>我们知道JavaScript有6大数据类型，分别是简单数据类型string，number，boolean，undefined，null和复杂数据类型object，Object之所以复杂是因为它可以由任意数据类型构成，包括它自身，再加上原型继承的特性，使得任意一个object拥有无限的可能，比如一组商品数据，一个方法库，甚至是一个框架...</p>
+		<p>但是不要被吓到了，先从基础入手，JavaScript中几乎所有的对象都是 Object 的实例，所有的对象都继承了Object.prototype的属性和方法，下面开始探索Object.prototype吧！</p>
+	</section>
+
+	<section>
+		<h2>初步认识</h2>
+		<p>为了有更加直观的认识，我们可以在chrome打开发者工具，打印出Object.prototype，如下图。</p>
+		<img src="./static/images/js-object.png" alt="">
+		
+	</section>
+
+
+	<section>
+		<h2>常规属性和方法</h2>
+
+		<p>下面将通过一个连贯的demo进行测试和说明</p>
+		
+		<pre><code class="language-js">
+// 完成一个简单的原型继承作为测试案例
+function Dog(name) {
+	this.name = name;
+}
+var animail = {
+	food:'rice',
+	say:function(){
+		console.log(this.name);
+	}
+}
+animail.constructor = Dog;  //如果不加上这句，wangcai.constructor返回function Object(){...}
+Dog.prototype = animail;
+var wangcai = new Dog('wangcai');
+
+
+//1. constructor（保存当前对象的构造函数，也是该对象原型的构造函数）
+console.log(wangcai.constructor);   //function Dog(){.}
+
+//2. hasOwnProperty(propertyName) (判断当前对象有自己的propertyName属性，而不是在原型中继承的）
+console.log(wangcai.hasOwnProperty('name'));	//true
+console.log(wangcai.hasOwnProperty('food'));	//false
+
+//3. isPrototypeOf(Object) (判断Object是否为当前对象的原型）
+console.log(animail.isPrototypeOf(wangcai));	//true
+console.log({}.isPrototypeOf(wangcai));	    //false
+console.log(Object.prototype.isPrototypeOf(wangcai));	    //true		// 原型链上的原型也为true
+
+//4. propertyIsEnumerable(propertyName) (判断propertyName该属性是否可以用for in枚举)
+//a.属性必须属于实例的,并且不属于原型
+//b.这个属性必须是可枚举的,也就是自定义的属性,可以通过for..in循环出来的
+//满足以上两个条件才返回true！！
+console.log(wangcai.propertyIsEnumerable('name'));	//true
+console.log(wangcai.propertyIsEnumerable('eat'));	//true
+console.log(wangcai.propertyIsEnumerable('food'));	//false
+console.log(wangcai.propertyIsEnumerable('say'));	//false
+//实际for in会列举原型链上的所有属性
+for(pro in wangcai){
+	console.log(pro);
+}
+//返回 name, eat, food, say, construtor
+
+
+//5. toString() (返回对象的字符串表示）
+console.log(wangcai.toString());	//[object Object]
+
+//6. toLocaleString()(返回对象的字符串表示，与执行环境的地区对应)
+//该方法会在后台调用toString()方法，可通过重写toString方法来检测
+console.log(wangcai.toLocaleString());	//[object Object]
+
+//7. valueOf() (返回对象的字符串，数组或布尔值表示)
+//该方法也会在后台调用toString()方法
+console.log(wangcai.valueOf());		//[object Object]
+
+//* toString(), toLocaleString(), valueOf()主要差异表现在时间对象上面，如下
+var date = new Date('2017-2-28');
+console.log(date.toString());			// Tue Feb 28 2017 00:00:00 GMT+0800 (中国标准时间)		
+console.log(date.toLocaleString());		// 2017/2/28 上午12:00:00
+console.log(date.valueOf());			// 1488211200000
+			</code></pre>
+		<p>关于setter和getter请看下一篇文章<a href="./#/article?id=js-2" target="_blank">对象详解（setter和getter）</a></p>
+	</section>
+
+
+		
+</div>
+
+
+
+
+<div class="demo">
+
+</div>
+
+
